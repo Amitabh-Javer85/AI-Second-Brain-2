@@ -1,0 +1,68 @@
+﻿# Secrets and local configuration
+.env
+.env.*
+!.env.example
+**/*.pem
+**/*.key
+**/credentials.json
+**/*service-account*.json
+**/*.tfvars
+**/*credentials*.json
+
+# Dependencies and caches
+venv/
+.venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Builds, logs, and generated graphs
+build/
+dist/
+.next/
+*.log
+logs/
+graphify-out/
+**/graph/
+**/graphify-out/
+
+# Local databases and vector stores
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+*.faiss
+*.index
+chroma/
+.chroma/
+qdrant_storage/
+vector_store/
+
+# Editor and OS state
+.obsidian/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Personal vault content. Only the fictional example is public.
+/projects/*
+!/projects/example-project/
+/projects/example-project/*
+!/projects/example-project/decisions.md
+!/projects/example-project/sessions/
+/projects/example-project/sessions/*
+!/projects/example-project/sessions/latest.md
+!/projects/example-project/wiki/
+/projects/example-project/wiki/*
+!/projects/example-project/wiki/architecture.md
+/areas/*
+!/areas/.gitkeep
+/resources/*
+!/resources/.gitkeep
+/inbox/*
+!/inbox/.gitkeep
+/archive/*
+!/archive/.gitkeep

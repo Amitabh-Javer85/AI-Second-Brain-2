@@ -1,0 +1,36 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    name: CI checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Example output
+        working-directory: examples/note-summary
+        run: |
+          python summarize.py sample.txt | tee "$RUNNER_TEMP/summary.txt"
+          grep -Fx 'Total notes: 3' "$RUNNER_TEMP/summary.txt"
+          grep -Fx 'Action: 2' "$RUNNER_TEMP/summary.txt"
+          grep -Fx 'Decision: 1' "$RUNNER_TEMP/summary.txt"
+      - name: AST-only graph
+        working-directory: examples/note-summary
+        run: |
+          python -m pip install graphifyy==0.8.40
+          graphify update .
+          graphify query 'main' --budget 800 | tee "$RUNNER_TEMP/graph.txt"
+          grep -E 'main\(\).*calls.*parse_notes\(' "$RUNNER_TEMP/graph.txt"
+          grep -E 'main\(\).*calls.*format_summary\(' "$RUNNER_TEMP/graph.txt"
